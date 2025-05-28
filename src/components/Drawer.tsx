@@ -7,7 +7,8 @@ export const Drawer = () => {
     const [isDrawing, setDrawing] = useState<boolean>(false);
 
     const [lines, setLines] = useState<number[][]>([]); // points属性の型が number[] のため各 point を格納する配列（型）は number[][] となる
-    const strokeColors = useMemo(() => ["red", "green", "blue", "yellow", "purple"], []);
+
+    const strokeColors = useMemo(() => ["red", "green", "blue", "yellow", "purple"], []); // strokeの色をランダムに選ぶための配列
 
     // クリックした位置からペイントスタート
     const handleMouseDown = (evt: KonvaEventObject<MouseEvent | TouchEvent>) => {
@@ -20,6 +21,7 @@ export const Drawer = () => {
         setDrawing(true);
     };
 
+    // ドラッグ操作
     const handleMove = (evt: KonvaEventObject<MouseEvent | TouchEvent>) => {
         if (isDrawing === false) {
             return; // ドラッグ中以外はペイントしない
@@ -54,7 +56,9 @@ export const Drawer = () => {
                 onMouseMove={handleMove}
                 onTouchMove={handleMove}
                 onMouseDown={handleMouseDown}
+                onTouchStart={handleMouseDown}
                 onMouseUp={handleMouseUp}
+                onTouchEnd={handleMouseUp}
             >
                 <Layer>
                     {lines.map((line, i) => (

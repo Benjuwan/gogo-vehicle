@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import vehicle_001 from "../assets/vehicles/vehicle-001.svg";
 import vehicle_002 from "../assets/vehicles/vehicle-002.svg";
@@ -22,16 +22,17 @@ type vehiclesType = {
 export const VehiclesIcon = ({ props }: { props: vehiclesType }) => {
     const { lines, isDrawing } = props;
 
-    const audioRef = useRef<null | HTMLAudioElement>(null);
-
     const audiosets = [audio_moving_vehicle, audio_flying_vehicle];
     const vehicles = [
         vehicle_001, vehicle_002, vehicle_003, vehicle_004,
         vehicle_005, vehicle_006, vehicle_007, vehicle_008,
         vehicle_009, vehicle_010
     ];
-    console.log(audiosets[Math.floor(Math.random() * audiosets.length)]);
-    console.log(vehicles[Math.floor(Math.random() * vehicles.length)]);
+
+    const audioRef = useRef<null | HTMLAudioElement>(null);
+
+    const [theAudio, setAudio] = useState<string>(audio_moving_vehicle);
+    const [theVehicle, setVehicle] = useState<string>(vehicle_001);
 
     if (isDrawing) {
         audioRef.current?.play();
@@ -39,13 +40,20 @@ export const VehiclesIcon = ({ props }: { props: vehiclesType }) => {
         audioRef.current?.pause();
     }
 
+    useEffect(() => {
+        if (isDrawing) {
+            setVehicle(vehicles[Math.floor(Math.random() * vehicles.length)]);
+            setAudio(audiosets[Math.floor(Math.random() * audiosets.length)]);
+        }
+    }, [isDrawing]);
+
     return (
         <>
             <figure
                 style={{ "transform": `translate(${lines.at(-1)?.[0]}px, ${lines.at(-1)?.[1]}px)` }}
-                className={isDrawing ? "vehicle" : undefined}
-            ><img className="max-w-[3rem] align-middle" src={vehicle_001} alt="乗り物アイコン" /></figure>
-            <audio src={audio_moving_vehicle} ref={audioRef}>&nbsp;</audio>
+            // className={isDrawing ? "vehicle" : undefined}
+            ><img className="max-w-[3rem] align-middle" src={theVehicle} alt="乗り物アイコン" /></figure>
+            <audio src={theAudio} ref={audioRef}>&nbsp;</audio>
         </>
     );
 }
