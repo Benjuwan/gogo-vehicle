@@ -1,4 +1,4 @@
-# GoGo-Vehicle
+# gogo-vehicle
 幼児向け乗り物お絵かきアプリ。
 1. 画面タップすることで、ランダムに色々な乗り物アイコンが表示される
 2. 乗り物アイコンをタップし続ける限り、それらを動かして自由に線を引ける
@@ -35,4 +35,3 @@ npm install react-konva konva --save
 - typescript-eslint@8.33.0
 - typescript@5.8.3
 - vite@6.3.5
-# gogo-vehicle
