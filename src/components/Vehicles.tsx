@@ -42,14 +42,20 @@ export const Vehicles = memo(({ props }: { props: vehiclesType }) => {
         if (isDrawing) {
             setVehicle(vehicles[Math.floor(Math.random() * vehicles.length)]);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDrawing]);
+
+    // console.log(lines.at(-1));
+    // console.log(lines.at(-1)?.at(-2), lines.at(-1)?.at(-1));
 
     return (
         <>
-            <figure style={{
-                // 乗り物アイコンの位置は微調整
-                "transform": `translate(${Number(lines.at(-1)?.[0]) - 40}px, ${Number(lines.at(-1)?.[1]) + 40}px)`
-            }}
+            <figure
+                style={{
+                    // 乗り物アイコンの位置は微調整
+                    "transform": `translate(${Number(lines.at(-1)?.at(-2)) - 40}px, ${Number(lines.at(-1)?.at(-1)) + 40}px)`
+                }}
+                className={isDrawing ? 'activeVehicle' : undefined}
             ><img className="max-w-[3.5rem] align-middle" src={theVehicle} alt="乗り物アイコン" /></figure>
             <audio
                 src={theVehicle.includes('helicopter') ?
