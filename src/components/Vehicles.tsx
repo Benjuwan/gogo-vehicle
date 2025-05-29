@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 import vehicle_001 from "../assets/vehicles/vehicle-001.svg";
 import vehicle_002 from "../assets/vehicles/vehicle-002.svg";
@@ -9,7 +9,7 @@ import vehicle_006 from "../assets/vehicles/vehicle-006.svg";
 import vehicle_007 from "../assets/vehicles/vehicle-007.svg";
 import vehicle_008 from "../assets/vehicles/vehicle-008.svg";
 import vehicle_009 from "../assets/vehicles/vehicle-009.svg";
-import vehicle_010 from "../assets/vehicles/vehicle-010.svg";
+import vehicle_helicopter from "../assets/vehicles/vehicle-helicopter.svg";
 
 import audio_moving_vehicle from "../assets/bgm/moving-vehicle.mp3";
 import audio_flying_vehicle from "../assets/bgm/flying-vehicle.mp3";
@@ -19,19 +19,17 @@ type vehiclesType = {
     isDrawing: boolean;
 };
 
-export const VehiclesIcon = ({ props }: { props: vehiclesType }) => {
+export const Vehicles = memo(({ props }: { props: vehiclesType }) => {
     const { lines, isDrawing } = props;
 
-    const audiosets = [audio_moving_vehicle, audio_flying_vehicle];
     const vehicles = [
         vehicle_001, vehicle_002, vehicle_003, vehicle_004,
         vehicle_005, vehicle_006, vehicle_007, vehicle_008,
-        vehicle_009, vehicle_010
+        vehicle_009, vehicle_helicopter
     ];
 
     const audioRef = useRef<null | HTMLAudioElement>(null);
 
-    const [theAudio, setAudio] = useState<string>(audio_moving_vehicle);
     const [theVehicle, setVehicle] = useState<string>(vehicle_001);
 
     if (isDrawing) {
@@ -43,17 +41,22 @@ export const VehiclesIcon = ({ props }: { props: vehiclesType }) => {
     useEffect(() => {
         if (isDrawing) {
             setVehicle(vehicles[Math.floor(Math.random() * vehicles.length)]);
-            setAudio(audiosets[Math.floor(Math.random() * audiosets.length)]);
         }
     }, [isDrawing]);
 
     return (
         <>
-            <figure
-                style={{ "transform": `translate(${lines.at(-1)?.[0]}px, ${lines.at(-1)?.[1]}px)` }}
-            // className={isDrawing ? "vehicle" : undefined}
-            ><img className="max-w-[3rem] align-middle" src={theVehicle} alt="乗り物アイコン" /></figure>
-            <audio src={theAudio} ref={audioRef}>&nbsp;</audio>
+            <figure style={{
+                // 乗り物アイコンの位置は微調整
+                "transform": `translate(${Number(lines.at(-1)?.[0]) - 40}px, ${Number(lines.at(-1)?.[1]) + 40}px)`
+            }}
+            ><img className="max-w-[3.5rem] align-middle" src={theVehicle} alt="乗り物アイコン" /></figure>
+            <audio
+                src={theVehicle.includes('helicopter') ?
+                    audio_flying_vehicle : audio_moving_vehicle}
+                ref={audioRef}
+                hidden
+            >&nbsp;</audio>
         </>
     );
-}
+});

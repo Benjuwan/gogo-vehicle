@@ -1,10 +1,10 @@
-import { Drawer } from "./components/Drawer";
+import { TheDrawer } from "./components/TheDrawer";
 
 export const App = () => {
   return (
     <>
-      <h1 className="text-center leading-[2em]">GoGo Vehicle</h1>
-      <Drawer />
+      <h1 className="text-center leading-[2em] tracking-[0.15em] py-8">GoGo Vehicle</h1>
+      <TheDrawer />
     </>
   );
 }

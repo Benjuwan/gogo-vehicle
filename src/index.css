@@ -1,19 +1,1 @@
 @import "tailwindcss";
-
-@layer utilities {
-    .vehicle {
-        animation: vehicle-moving 1s ease-in-out infinite;
-    }
-
-    @keyframes vehicle-moving {
-
-        0%,
-        50% {
-            transform: translateY(0);
-        }
-
-        100% {
-            transform: translateY(-3px);
-        }
-    }
-}
