@@ -1,9 +1,5 @@
 import type { KonvaEventObject } from "konva/lib/Node";
-
-export type linesPointType = {
-    x: number;
-    y: number;
-};
+import type { linesPointType } from "../types/types";
 
 // 座標位置の操作を担う関数
 export const useCtrlKonvaLines = () => {

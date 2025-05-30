@@ -1,17 +1,1 @@
 @import "tailwindcss";
-
-@layer utilities {
-    .activeVehicle {
-        animation: isDrawing infinite .5s linear alternate-reverse;
-    }
-
-    @keyframes isDrawing {
-        0% {
-            filter: drop-shadow(0 0 8px #eaea26);
-        }
-
-        100% {
-            filter: drop-shadow(0 0 0 transparent);
-        }
-    }
-}
