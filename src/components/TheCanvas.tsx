@@ -1,10 +1,10 @@
 import { memo, useState } from "react";
 import { Stage, Layer, Line, Group } from "react-konva";
 import type { eachVehicleType } from "../types/types";
+import { PaintResetBtn } from "./PaintResetBtn";
 import { VehicleAudio } from "./VehicleAudio";
 import { VehicleImage } from "./VehicleImage";
 import { useHandleInteractive } from "../hooks/useHandleInteractive";
-import { PaintResetBtn } from "./PaintResetBtn";
 
 export const TheCanvas = memo(() => {
     const [isDrawing, setDrawing] = useState<boolean>(false);
@@ -15,7 +15,7 @@ export const TheCanvas = memo(() => {
     const initEachVehicles: eachVehicleType[] = [
         {
             iconSrc: "",
-            stroke: "black",
+            stroke: "#333",
             lines: []
         }
     ];
@@ -33,14 +33,14 @@ export const TheCanvas = memo(() => {
             }} />
             <Stage
                 width={window.innerWidth}
-                height={window.innerHeight - 160}
+                height={window.innerHeight / 1.5}
                 onMouseMove={handleMove}
                 onTouchMove={handleMove}
                 onMouseDown={handleMouseDown}
                 onTouchStart={handleMouseDown}
                 onMouseUp={handleMouseUp}
                 onTouchEnd={handleMouseUp}
-                className="bg-[#f3f3f3]"
+                className="bg-[#f3f3f3] touch-none"  // touch-none：タッチ操作のネイティブな動作を無効化
             >
                 <Layer>
                     {eachVehicle.map((vehicle, i) => (
@@ -61,8 +61,8 @@ export const TheCanvas = memo(() => {
                             {vehicle.lines.length > 0 && (
                                 <VehicleImage props={{
                                     vehicle: vehicle,
-                                    x: vehicle.lines.at(-1)?.at(-2) ?? 0,
-                                    y: vehicle.lines.at(-1)?.at(-1) ?? 0
+                                    x: vehicle.lines.at(-1)?.at(-2) ?? 0, // number[][] なので at 2回
+                                    y: vehicle.lines.at(-1)?.at(-1) ?? 0  // number[][] なので at 2回
                                 }} />
                             )}
                         </Group>
