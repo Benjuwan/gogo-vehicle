@@ -1,12 +1,18 @@
 import { memo, useState } from "react";
 import { Stage, Layer, Line, Group } from "react-konva";
+import { Image } from "react-konva"; // Stage内で画像を扱うための専用コンポーネント
+import useImage from 'use-image'; // 画像の非同期読み込みとステート管理を自動化
 import type { eachVehicleType } from "../types/types";
 import { PaintResetBtn } from "./PaintResetBtn";
 import { VehicleAudio } from "./VehicleAudio";
 import { VehicleImage } from "./VehicleImage";
 import { useHandleInteractive } from "../hooks/useHandleInteractive";
 
+import backgroundImage from "../assets/sample-map-min.jpg";
+
 export const TheCanvas = memo(() => {
+    const [mapImg] = useImage(backgroundImage);
+
     const [isDrawing, setDrawing] = useState<boolean>(false);
 
     // eachVehicle 配列内の各要素へアクセスするためのインデックスState（描画中の要素を特定するために使用）
@@ -21,7 +27,7 @@ export const TheCanvas = memo(() => {
     ];
     const [eachVehicle, setEachVehicle] = useState<eachVehicleType[]>(initEachVehicles);
 
-    const { handleMove, handleMouseDown, handleMouseUp } = useHandleInteractive(activeVehicleIndex, setActiveVehicleIndex, isDrawing, setDrawing, setEachVehicle);
+    const { handleMove, handleMouseDown, handleMouseUp } = useHandleInteractive(activeVehicleIndex, setActiveVehicleIndex, isDrawing, setDrawing, eachVehicle, setEachVehicle);
 
     return (
         <>
@@ -42,6 +48,15 @@ export const TheCanvas = memo(() => {
                 onTouchEnd={handleMouseUp}
                 className="bg-[#f3f3f3] touch-none"  // touch-none：タッチ操作のネイティブな動作を無効化
             >
+                {/* 背景画像レイヤー */}
+                <Layer>
+                    <Image
+                        image={mapImg}
+                        width={960}
+                        height={640}
+                    />
+                </Layer>
+                {/* 描画レイヤー */}
                 <Layer>
                     {eachVehicle.map((vehicle, i) => (
                         // Group： 線と画像を1つのユニットとして管理するためのコンポーネント

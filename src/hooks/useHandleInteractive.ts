@@ -11,6 +11,7 @@ export const useHandleInteractive = (
     setActiveVehicleIndex: React.Dispatch<React.SetStateAction<number>>,
     isDrawing: boolean,
     setDrawing: React.Dispatch<React.SetStateAction<boolean>>,
+    eachVehicle: eachVehicleType[],
     setEachVehicle: React.Dispatch<React.SetStateAction<eachVehicleType[]>>
 ) => {
     const { ctrlKonvaLines } = useCtrlKonvaLines();
@@ -19,7 +20,7 @@ export const useHandleInteractive = (
     const initStrokeColors = useMemo(() => ["#d96868", "#efa449", "#ffe9a7"], []);
 
     // クリックした位置からペイント開始
-    const handleMouseDown = (evt: KonvaEventObject<MouseEvent | TouchEvent>) => {
+    const handleMouseDown: (evt: KonvaEventObject<MouseEvent | TouchEvent>) => void = (evt: KonvaEventObject<MouseEvent | TouchEvent>) => {
         const point: linesPointType | undefined = ctrlKonvaLines(evt);
         if (typeof point === 'undefined') {
             return;
@@ -42,7 +43,7 @@ export const useHandleInteractive = (
     };
 
     // ドラッグ操作
-    const handleMove = (evt: KonvaEventObject<MouseEvent | TouchEvent>) => {
+    const handleMove: (evt: KonvaEventObject<MouseEvent | TouchEvent>) => void = (evt: KonvaEventObject<MouseEvent | TouchEvent>) => {
         if (!isDrawing) {
             return;
         }
@@ -54,33 +55,30 @@ export const useHandleInteractive = (
 
         evt.evt.preventDefault(); // タッチ操作時のスクロールを防止
 
-        setEachVehicle(prev => {
-            // 最後に書いた線(配列の最後尾)のインデックス取得
-            const lastLineIndex = prev[activeVehicleIndex].lines.length - 1;
+        // 最後に書いた線（配列最後尾）のインデックス取得
+        const lastLineIndex = eachVehicle[activeVehicleIndex].lines.length - 1;
 
-            const updatedVehicle = {
-                // 既存の各プロパティ
-                ...prev[activeVehicleIndex],
+        // 更新用の eachVehicleType 型要素（オブジェクト）
+        const updateEachVehicle: eachVehicleType = {
+            // アクティブ（現在操作中＝最後に書いた線／配列最後尾）な配列内要素（の既存の各プロパティ）
+            ...eachVehicle[activeVehicleIndex],
 
-                // 初期描画時のアイコン表示制御
-                iconSrc: activeVehicleIndex <= 2 ?
-                    initVehicleIcon :
-                    prev[activeVehicleIndex].iconSrc,
+            // 初期描画時のアイコン表示制御
+            iconSrc: activeVehicleIndex <= 2 ? initVehicleIcon : eachVehicle[activeVehicleIndex].iconSrc,
 
-                // 更新対象の配列要素（アクティブな配列要素が最終描画された要素）の場合
-                // 現在描画中の線（配列の最後の要素）に新しい座標を追加
-                lines: prev[activeVehicleIndex].lines.map((line, index) =>
-                    index === lastLineIndex ?
-                        [...line, point.x, point.y] // 既存の座標に新しい座標を追加
-                        : line // 既存の座標を展開
-                )
-            };
+            // 更新対象（アクティブ／現在操作中＝最後に書いた線／配列最後尾）の配列要素の場合
+            // 既存の座標に新しい座標を追加
+            lines: [...eachVehicle][activeVehicleIndex].lines.map((line, index) =>
+                index === lastLineIndex ?
+                    [...line, point.x, point.y] // 既存の座標に新しい座標を追加
+                    : line // 既存の座標を展開
+            )
+        }
 
-            // 更新対象（アクティブな配列要素）のインデックスの場合は新しい配列要素に差し替え、それ以外は既存の要素を維持
-            return [...prev].map((vehicle, index) =>
-                index === activeVehicleIndex ? updatedVehicle : vehicle
-            );
-        });
+        const updatedEachVehicles: eachVehicleType[] = [...eachVehicle];
+        // 更新対象は新しい配列要素に差し替えて、それ以外は既存の要素を維持
+        updatedEachVehicles.splice(activeVehicleIndex, 1, updateEachVehicle);
+        setEachVehicle(updatedEachVehicles);
     };
 
     // 離したタイミングでペイント終了

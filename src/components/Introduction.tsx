@@ -2,6 +2,7 @@ import { memo, useRef } from "react";
 
 import audio_moving_vehicle from "../assets/bgm/moving-vehicle.mp3"; // https://pixabay.com/ja/sound-effects/
 import audio_flying_vehicle from "../assets/bgm/flying-vehicle.mp3"; // https://maou.audio/se_sound_vehicle01/
+import intro_gif from "../assets/intro.gif";
 
 export const Introduction = memo(({ setAudioPlayOn }: { setAudioPlayOn: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const audioRef_mov = useRef<null | HTMLAudioElement>(null);
@@ -26,6 +27,7 @@ export const Introduction = memo(({ setAudioPlayOn }: { setAudioPlayOn: React.Di
                 <p className="leading-[1.8] not-last:mb-[1em]">幼児向け「乗り物お絵かきアプリ」です。</p>
                 <p className="leading-[1.8] not-last:mb-[1em]">画面タップでランダムに色々な乗り物アイコンが表示されます。</p>
                 <p className="leading-[1.8] not-last:mb-[1em]">タップし続ける限り、それらを動かして自由に線を引けるので、乗り物を自在に動かしながらお絵描きドライブを楽しみましょうー</p>
+                <figure className="w-fit m-auto p-[.5em] rounded bg-[#f9b12c]"><img src={intro_gif} alt="実際に操作している参照用gif" /></figure>
             </div>
             <button
                 type="button"
