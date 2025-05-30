@@ -25,6 +25,8 @@ export const useHandleInteractive = (
             return;
         }
 
+        evt.evt.preventDefault(); // タッチ操作時のスクロールを防止
+
         const newVehicle: eachVehicleType = {
             iconSrc: activeVehicleIndex > 0 ? vehicles[Math.floor(Math.random() * vehicles.length)] : '',
             stroke: initStrokeColors[Math.floor(Math.random() * initStrokeColors.length)],
@@ -50,30 +52,34 @@ export const useHandleInteractive = (
             return;
         }
 
+        evt.evt.preventDefault(); // タッチ操作時のスクロールを防止
+
         setEachVehicle(prev => {
-            // 既存の eachVehicle の内容（シャローコピー）
-            const newVehicles = [...prev];
-            // 現在描画中の更新対象を指定（eachVehicle 配列内のインデックス該当要素）
-            const activeVehicle = newVehicles[activeVehicleIndex];
-
-            if (activeVehicleIndex <= 2) {
-                // 初期描画時のアイコン表示制御
-                activeVehicle.iconSrc = initVehicleIcon;
-            }
-
             // 最後に書いた線(配列の最後尾)のインデックス取得
-            const lastLineIndex = activeVehicle.lines.length - 1;
-            if (lastLineIndex >= 0) {
-                // 現在描画中の線（配列の最後の要素）に、新しい座標を追加
-                //（※コード内容的には、更新対象要素の number[][] の一次配列内（要素）を更新）
-                activeVehicle.lines[lastLineIndex] = [
-                    ...activeVehicle.lines[lastLineIndex], // 既存の座標を展開
-                    point.x, point.y                       // 新しい座標を追加
-                ];
-            }
+            const lastLineIndex = prev[activeVehicleIndex].lines.length - 1;
 
-            // 上記修正・加工を行った更新対象要素（eachVehicle 配列内のインデックス該当要素）を含む既存内容を返却
-            return newVehicles;
+            const updatedVehicle = {
+                // 既存の各プロパティ
+                ...prev[activeVehicleIndex],
+
+                // 初期描画時のアイコン表示制御
+                iconSrc: activeVehicleIndex <= 2 ?
+                    initVehicleIcon :
+                    prev[activeVehicleIndex].iconSrc,
+
+                // 更新対象の配列要素（アクティブな配列要素が最終描画された要素）の場合
+                // 現在描画中の線（配列の最後の要素）に新しい座標を追加
+                lines: prev[activeVehicleIndex].lines.map((line, index) =>
+                    index === lastLineIndex ?
+                        [...line, point.x, point.y] // 既存の座標に新しい座標を追加
+                        : line // 既存の座標を展開
+                )
+            };
+
+            // 更新対象（アクティブな配列要素）のインデックスの場合は新しい配列要素に差し替え、それ以外は既存の要素を維持
+            return [...prev].map((vehicle, index) =>
+                index === activeVehicleIndex ? updatedVehicle : vehicle
+            );
         });
     };
 
