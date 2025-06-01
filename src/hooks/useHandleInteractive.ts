@@ -64,7 +64,7 @@ export const useHandleInteractive = (
             ...eachVehicle[activeVehicleIndex],
 
             // 初期描画時のアイコン表示制御
-            iconSrc: activeVehicleIndex <= 2 ? initVehicleIcon : eachVehicle[activeVehicleIndex].iconSrc,
+            iconSrc: activeVehicleIndex === 1 ? initVehicleIcon : eachVehicle[activeVehicleIndex].iconSrc,
 
             // 更新対象（アクティブ／現在操作中＝最後に書いた線／配列最後尾）の配列要素の場合
             // 既存の座標に新しい座標を追加
