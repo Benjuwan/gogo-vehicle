@@ -1,3 +1,5 @@
+// 各種乗り物アセットDL先：https://www.ac-illust.com/main/search_result.php?search_word=%E4%B9%97%E3%82%8A%E7%89%A9&sl=ja&qt=&qid=&creator=%E3%81%BC%E3%82%93%E3%81%A2%E3%82%8A&ngcreator=&nq=&srt=dlrank&orientation=all&format=all&color=all
+
 import vehicle_001 from "../assets/vehicles/vehicle-001.svg";
 import vehicle_002 from "../assets/vehicles/vehicle-002.svg";
 import vehicle_003 from "../assets/vehicles/vehicle-003.svg";

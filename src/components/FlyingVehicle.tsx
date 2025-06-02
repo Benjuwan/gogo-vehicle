@@ -1,9 +1,9 @@
 import { memo } from "react";
 
-import vehicle_helicopter from "../assets/vehicles/vehicle-helicopter.svg";
+import ufo from "../assets/vehicles/ufo.svg";
 
 export const FlyingVehicle = memo(() => {
     return (
-        <figure className="flyingVehicle"><img className="align-middle" src={vehicle_helicopter} alt="ヘリコプター" /></figure>
+        <figure className="flyingVehicle"><img className="align-middle" src={ufo} alt="ufo" /></figure>
     );
 });
