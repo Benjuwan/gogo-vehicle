@@ -24,9 +24,9 @@ export const Introduction = memo(({ setAudioPlayOn }: { setAudioPlayOn: React.Di
         <section className="p-[1em]">
             <div className="shadow-[0_0_8px_inset_rgba(0,0,0,.25)] rounded p-[1em]">
                 <h2 className="text-center mb-[1.5em] pb-[1em] text-lg border-dotted border-b-1 border-[#dadada]">このサイトについて</h2>
-                <p className="leading-[1.8] text-center not-last:mb-[1em]">幼児向け「乗り物お絵かきアプリ」です。</p>
-                <p className="leading-[1.8] text-center not-last:mb-[1em]">画面タップでランダムに色々な乗り物アイコンが表示されます。</p>
-                <p className="leading-[1.8] text-center not-last:mb-[1em]">タップし続ける限り、それらを動かして自由に線を引けるので、<br />乗り物を自在に動かしながらお絵描きドライブを楽しみましょう。</p>
+                <p className="leading-[1.8] text-center not-last:mb-[.5em]">幼児向け「乗り物お絵かきアプリ」です。</p>
+                <p className="leading-[1.8] text-center not-last:mb-[.5em]">画面タップでランダムに色々な乗り物アイコンが表示されます。</p>
+                <p className="leading-[1.8] text-center not-last:mb-[.5em]">タップし続ける限り、それらを動かして自由に線を引けるので、<br />乗り物を自在に動かしながらお絵描きドライブを楽しみましょう。</p>
                 <figure className="w-fit m-auto p-[.5em] rounded bg-[#f9b12c]"><img src={intro_gif} alt="実際に操作している参照用gif" /></figure>
             </div>
             <button
