@@ -32,21 +32,21 @@ npm install react-konva konva --save
 ```
 
 ## 技術構成
-- @eslint/js@9.29.0
-- @tailwindcss/vite@4.1.10
+- @eslint/js@9.31.0
+- @tailwindcss/vite@4.1.11
 - @types/react-dom@19.1.6
 - @types/react@19.1.8
 - @vitejs/plugin-react@4.6.0
 - eslint-plugin-react-hooks@5.2.0
 - eslint-plugin-react-refresh@0.4.20
-- eslint@9.29.0
-- globals@16.2.0
-- konva@9.3.20
+- eslint@9.31.0
+- globals@16.3.0
+- konva@9.3.22
 - react-dom@19.1.0
-- react-konva@19.0.6
+- react-konva@19.0.7
 - react@19.1.0
-- tailwindcss@4.1.10
-- typescript-eslint@8.35.0
+- tailwindcss@4.1.11
+- typescript-eslint@8.37.0
 - typescript@5.8.3
 - use-image@1.1.4
 - vite@6.3.5
