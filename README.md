@@ -32,24 +32,24 @@ npm install react-konva konva --save
 ```
 
 ## 技術構成
-- @eslint/js@9.34.0
-- @tailwindcss/vite@4.1.12
+- @eslint/js@9.35.0
+- @tailwindcss/vite@4.1.13
 - @types/react-dom@19.1.9
-- @types/react@19.1.12
+- @types/react@19.1.13
 - @vitejs/plugin-react@4.7.0
 - eslint-plugin-react-hooks@5.2.0
 - eslint-plugin-react-refresh@0.4.20
-- eslint@9.34.0
-- globals@16.3.0
+- eslint@9.35.0
+- globals@16.4.0
 - konva@9.3.22
 - react-dom@19.1.1
-- react-konva@19.0.7
+- react-konva@19.0.10
 - react@19.1.1
-- tailwindcss@4.1.12
-- typescript-eslint@8.42.0
+- tailwindcss@4.1.13
+- typescript-eslint@8.44.0
 - typescript@5.8.3
 - use-image@1.1.4
-- vite@6.3.5
+- vite@6.3.6
 
 ## 備忘録
 ### `src\hooks\useHandleInteractive.ts`の`handleMove`メソッドにおける描画要素Stateの更新アプローチについて
