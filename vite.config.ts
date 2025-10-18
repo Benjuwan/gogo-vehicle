@@ -8,5 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  // base: '/r0105/gogo'
+  // base: '/r0105/gogo', // ビルド成果物のホスティング先パスを指定
 })
