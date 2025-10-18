@@ -32,14 +32,15 @@ npm install react-konva konva --save
 ```
 
 ## 技術構成
-- @eslint/js@9.37.0
+- @eslint/js@9.38.0
 - @tailwindcss/vite@4.1.14
 - @types/react-dom@19.2.2
 - @types/react@19.2.2
-- @vitejs/plugin-react@4.7.0
-- eslint-plugin-react-hooks@5.2.0
-- eslint-plugin-react-refresh@0.4.23
-- eslint@9.37.0
+- @vitejs/plugin-react@5.0.4
+- eslint-plugin-react-hooks@7.0.0
+- eslint-plugin-react-refresh@0.4.24
+- eslint-plugin-react@7.37.5
+- eslint@9.38.0
 - globals@16.4.0
 - konva@10.0.2
 - react-dom@19.2.0
@@ -47,11 +48,114 @@ npm install react-konva konva --save
 - react@19.2.0
 - tailwindcss@4.1.14
 - typescript-eslint@8.46.1
-- typescript@5.8.3
+- typescript@5.9.3
 - use-image@1.1.4
-- vite@6.3.7
+- vite@7.1.10
 
 ## 備忘録
+### Reactアプリケーションを（一つのコンテンツとして）部分的に埋め込みたい場合
+
+<details>
+<summary>※フローや注意事項はこちらに記載</summary>
+
+#### ビルド成果物を適当な場所にアップ（ホスティング）
+現状デプロイ先：`https://k2webservice.xsrv.jp/r0105/gogo`
+
+#### Reactアプリケーションを（一つのコンテンツとして）部分的に埋め込みたいページを編集
+
+```html
+<!-- CSSを読み込む -->
+<!-- 後述する Vite設定前（ハッシュ付き、ビルド毎に変わる）: -->
+<!-- <link rel="stylesheet" href="/<部分的に表示させたいページのパス>/assets/index-abc123.css"> -->
+
+<!-- Vite設定後（固定ファイル名）: -->
+<link rel="stylesheet" crossorigin href="/r0105/gogo/assets/index.css">
+
+<!-- Reactアプリが表示される場所 -->
+<div id="root"></div>
+
+<!-- JSを読み込む -->
+<!-- 後述する Vite設定前（ハッシュ付き、ビルド毎に変わる）: -->
+<!-- <script type="module" src="/<部分的に表示させたいページのパス>/assets/index-def456.js"></script> -->
+
+<!-- Vite設定後（固定ファイル名）: -->
+<script type="module" crossorigin src="/r0105/gogo/assets/bundle.js"></script>
+```
+
+※ビルドのたびにファイル名を更新する必要があるので注意。Vite を使っていると以下の記述を行うことでファイル名を固定できる
+
+#### Vite設定： `vite.config.ts`
+```ts
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  // base: '/r0105/gogo', // ビルド成果物のホスティング先パスを指定
+  /* 以下を追記することでビルド成果物のファイル名を固定できる */
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/bundle.js',
+        chunkFileNames: 'assets/[name].js',  // `[name]`は、viteの本番ビルド用バンドラー`Rollup`が自動的に決定したチャンク名やアセット名を使用するプレースホルダー
+        assetFileNames: (assetInfo) => {
+          // CSSファイルは固定名
+          if (assetInfo.names.includes('.css')) {
+            return 'assets/bundle.css';
+          }
+          // その他のアセット（画像等）は元の名前を保持
+          return 'assets/[name].[ext]';
+        }
+      }
+    }
+  }
+})
+```
+
+#### デプロイ後にスタイルが崩れている場合
+アプリケーション側のスタイル優先度が低いために起こっているので以下を試して対応する
+
+- CSS（スタイルシート）の読み込み位置を最後方に持ってくる（CSSは後述優先なので最後の方に記述してスタイル優先度を上げる）
+  - スタイル指定において詳細度を高める工夫を行う（例：親要素に`id`属性をあてて、それをベースにスタイル指定する）
+
+##### Tailwind CSS を使っている場合
+1. プロジェクトルートに`tailwind.config.js`を用意する
+- `tailwind.config.js`
+```js
+export default {
+    important: '#root', // すべての Tailwind クラスに #root の詳細度を付与（これでもダメだった場合は以下の !important 付与を実行）
+    // important: true,  //  すべての Tailwind クラスに !important を付与
+    corePlugins: {
+        preflight: true, // Tailwind のリセット CSS を有効化
+    },
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+}
+```
+
+2. `src/index.css`にTailwind CSSの設定（`tailwind.config.js`）を読み込ませる
+```diff
+@import "tailwindcss";
+
++ @config "../tailwind.config.js";
+
+@layer utilities {
+    ...
+    ..
+    .
+}
+```
+
+> [!NOTE]
+> `@config`に、`Unknown at rule @configcss(unknownAtRules)`と警告が表示される場合があるが、これは**VSCodeのCSS言語サーバーがTailwind CSS 4の`@config`を認識していないだけ**で挙動に問題はない
+
+3. ビルドし、生成されたCSS（`https://<ホスティング先パス>/assets/bundle（または index-xxx）.css`）を確認して`!important`が付与されているかをチェックする
+- ※余計なスタイルが当たっている場合は他のCSSが効いているケースなので地道に打ち消す
+
+</details>
+
+---
+
 ### `src\hooks\useHandleInteractive.ts`の`handleMove`メソッドにおける描画要素Stateの更新アプローチについて
 現状、自分が使い慣れた**[`splice`メソッド](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)を用いた要素差し替え**という実装アプローチを採用している。
 
