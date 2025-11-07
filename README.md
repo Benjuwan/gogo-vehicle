@@ -14,9 +14,6 @@
 
 ---
 
-- `src\constants\choseStrokeType.ts`<br>
-`choseStrokeType.ts`内の`isMixedStroked`変数の値によって、ランダム混合色（`true`）で描画するか、ランダム一色（`false`）で描画するかを選べる。
-
 ## 乗り物アイコン
 各乗り物アイコンのアセットは`src\constants\theVehicles.ts`で一元管理しています。
 
