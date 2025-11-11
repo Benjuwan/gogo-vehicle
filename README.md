@@ -44,7 +44,7 @@ npm install react-konva konva --save
 - react-konva@19.2.0
 - react@19.2.0
 - tailwindcss@4.1.17
-- typescript-eslint@8.46.3
+- typescript-eslint@8.46.4
 - typescript@5.9.3
 - use-image@1.1.4
 - vite@7.2.2
