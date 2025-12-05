@@ -21,9 +21,9 @@ export const Introduction = memo(({ setAudioPlayOn }: { setAudioPlayOn: React.Di
     }
 
     return (
-        <section className="p-[1em]">
+        <section className="p-[1em] max-w-3xl m-auto">
             <div className="shadow-[0_0_8px_inset_rgba(0,0,0,.25)] rounded p-[1em]">
-                <h2 className="text-center mb-[1.5em] pb-[1em] text-lg border-dotted border-b-1 border-[#dadada]">このサイトについて</h2>
+                <h2 className="text-center mb-[1.5em] pb-[1em] text-lg border-dotted border-b border-[#dadada]">このサイトについて</h2>
                 <p className="leading-[1.8] text-center not-last:mb-[.5em]">幼児向け「乗り物お絵かきアプリ」です。</p>
                 <p className="leading-[1.8] text-center not-last:mb-[.5em]">画面タップでランダムに色々な乗り物アイコンが表示されます。</p>
                 <p className="leading-[1.8] text-center not-last:mb-[.5em]">タップし続ける限り、それらを動かして自由に線を引けるので、<br />乗り物を自在に動かしながらお絵描きドライブを楽しみましょう。</p>
