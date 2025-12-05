@@ -7,7 +7,7 @@ export const TheDrawer = memo(() => {
     const [isAudioPlayOn, setAudioPlayOn] = useState<boolean>(false);
 
     return (
-        <main className="overflow-hidden max-w-[60rem] m-auto">
+        <main className="overflow-hidden w-full m-auto">
             {isAudioPlayOn ? <TheCanvas /> : <Introduction setAudioPlayOn={setAudioPlayOn} />}
         </main>
     );

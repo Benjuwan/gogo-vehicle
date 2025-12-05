@@ -42,7 +42,7 @@ export const TheCanvas = memo(() => {
                 <FlyingVehicle />
                 <Stage
                     width={window.innerWidth}
-                    height={window.innerHeight / 1.5}
+                    height={window.innerHeight}
                     onMouseMove={handleMove}
                     onTouchMove={handleMove}
                     onMouseDown={handleMouseDown}
@@ -55,8 +55,8 @@ export const TheCanvas = memo(() => {
                     <Layer>
                         <Image
                             image={mapImg}
-                            width={960}
-                            height={640}
+                            width={1920}
+                            height={1080}
                         />
                     </Layer>
                     {/* 描画レイヤー */}
