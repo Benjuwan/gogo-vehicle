@@ -1,6 +1,6 @@
 # gogo-vehicle
 
-[`GoGo Vehicle`](https://k2webservice.xsrv.jp/r0105/gogo/)は、幼児向け乗り物お絵かきアプリです。
+[`GoGo Vehicle`](https://gogo-vehicle.pages.dev)は、幼児向け乗り物お絵かきアプリです。
 1. 画面タップすることで、ランダムに色々な乗り物アイコンが表示される
 2. 乗り物アイコンをタップし続ける限り、それらを動かして自由に線を引ける
 
@@ -29,22 +29,22 @@ npm install react-konva konva --save
 ```
 
 ## 技術構成
-- @eslint/js@9.39.2
-- @tailwindcss/vite@4.1.18
+- @eslint/js@9.39.3
+- @tailwindcss/vite@4.2.0
 - @types/react-dom@19.2.3
-- @types/react@19.2.10
-- @vitejs/plugin-react@5.1.2
+- @types/react@19.2.14
+- @vitejs/plugin-react@5.1.4
 - eslint-plugin-react-hooks@7.0.1
 - eslint-plugin-react-refresh@0.4.26
 - eslint-plugin-react@7.37.5
-- eslint@9.39.2
-- globals@17.2.0
+- eslint@9.39.3
+- globals@17.3.0
 - konva@10.2.0
 - react-dom@19.2.4
-- react-konva@19.2.1
+- react-konva@19.2.2
 - react@19.2.4
-- tailwindcss@4.1.18
-- typescript-eslint@8.54.0
+- tailwindcss@4.2.0
+- typescript-eslint@8.56.0
 - typescript@5.9.3
 - use-image@1.1.4
 - vite@7.3.1
